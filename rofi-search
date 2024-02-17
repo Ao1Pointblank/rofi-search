@@ -19,11 +19,12 @@ then
     elif [[ $ENGINE_SELECT == "Freetube" ]]
     then
         freetube-search -r
-        #QUERY=$(rofi -dmenu -lines 0 -p "Freetube Search (ytfzf)") &&
-        #gnome-terminal -x ytfzf "$QUERY"
     elif [[ $ENGINE_SELECT == "Dictionary (Local)" ]]
     then
-	rofi-dict
+    	rofi-dict () {
+    		QUERY=$(rofi -dmenu -lines 0 -p 'Search Dictionary') && dict "$QUERY" | rofi -dmenu -fullscreen -p "Dictionary results for '$QUERY'" && rofi-dict
+    	}
+    	rofi-dict
     else
         QUERY=$(echo $PRIVATE_MODE_TEXT | rofi -l 1 -dmenu -p "$ENGINE_SELECT Search") &&
 
