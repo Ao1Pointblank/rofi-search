@@ -9,8 +9,8 @@
   go to ``about:config`` in firefox, and search for ``browser.bookmarks.autoExportHTML`` and set it to ``true``*  
 
 # TODO:
-searching local Firefox bookmarks (add python script to parse bookmarks)  
-Freetube fuzzyfind search (refine bash script before uploading) 
+searching local Firefox bookmarks (add python script to parse bookmarks)   
+Freetube fuzzyfind search (refine bash script before uploading)   
 install script? 
 
 # Requires:
