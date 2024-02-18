@@ -1,0 +1,46 @@
+#https://github.com/Ao1Pointblank/rofi-search
+#requires beautifulsoup4: ``pip install beautifulsoup4``
+#usage: ``python3 firefox_bookmarks.py``
+
+from bs4 import BeautifulSoup
+import glob
+import os
+
+user_folder = os.path.expanduser("~")
+
+#use glob to find the bookmarks file
+bookmark_files = glob.glob(os.path.join(user_folder, '.mozilla/firefox/*.default*/bookmarks.html'))
+
+#check if bookmark file found
+if bookmark_files:
+    bookmarks_file_path = bookmark_files[0]
+    #print(f"Bookmarks file found at: {bookmarks_file_path}")
+
+    #read the HTML content from the bookmarks file
+    with open(bookmarks_file_path, 'r', encoding='utf-8') as file:
+        html_content = file.read()
+
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    #extract bookmark URLs, titles, and tags
+    bookmarks = soup.find_all('a')
+    formatted_bookmarks = []
+
+    for bookmark in bookmarks:
+        url = bookmark["href"]
+        title = bookmark.text
+        tags = bookmark.get("tags", "")
+
+        #format the line for Rofi (𝆓 is a delimiter; can be changed, but make sure it is also changed in rofi-search)
+        formatted_line = f"{title} 𝆓 {url} 𝆓 {tags}"
+
+        #remove trailing | symbols
+        formatted_line = formatted_line.rstrip(' 𝆓')
+
+        formatted_bookmarks.append(formatted_line)
+
+    #print formatted bookmarks to stdout
+    for formatted_line in formatted_bookmarks:
+        print(formatted_line)
+else:
+    print("No bookmarks file found.")
