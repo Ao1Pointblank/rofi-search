@@ -8,18 +8,14 @@
   *this requires a firefox config flag to be altered:  
   go to ``about:config`` in firefox, and search for ``browser.bookmarks.autoExportHTML`` and set it to ``true``*  
 
-# TODO:
-uninstall script   
-fancy gif demo
-
-# Requires:
+# Requires
 ``rofi``   
 ``dict`` (optional)    
 ``firefox``  
 ``freetube`` (optional)  
 ``beautifulsoup4`` (required to search firefox bookmarks)  
 
-# Installation:
+# Installation
 **1of2: Manual Method**
 - download script and search engines: ``git clone https://github.com/Ao1Pointblank/rofi-search``
 
@@ -40,7 +36,7 @@ fancy gif demo
 ``cd rofi-search; chmod +x install.sh; ./install.sh``   
 (not responsible for damage to folders in ~/.local. please review the install script before using.)
 
-# Potential issues:
+# Potential issues
 - path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``Firefox Bookmarks`` file to reflect the correct path on your system.
 - permissions: make sure special search engines that run local commands have chmod +x permission (Freetube and the main script)
 
@@ -73,3 +69,11 @@ Brave is selected as the default if one is not specified. You can change this wi
 
 # Credits
 the Freetube script with fzf support was inspired by https://github.com/pystardust/ytfzf
+
+# TODO
+uninstall script   
+fancy gif demo
+
+# More
+try my spin of the adapta-nokto theme for Rofi!
+[Ao1-Adapta-Nokto.rasi](https://gist.github.com/Ao1Pointblank/ab9c8a68305b4ed0da762e1079ca7252#file-ao1-adapta-nokto-rasi)
