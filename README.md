@@ -23,7 +23,7 @@ install script?
 # Installation:
 - download: ``git clone https://github.com/Ao1Pointblank/rofi-search``
 
-- install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` 
+- install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` (also remember to change ``browser.bookmarks.autoExportHTML`` to true in ``about:config``)
 
 - install dict if you want to use local offline dictionaries: ``apt install dict wordnet`` (wordnet is a basic english dictionary library; you can add multiple other libraries too)
 
