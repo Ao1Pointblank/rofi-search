@@ -1,0 +1,85 @@
+#!/bin/bash
+#https://github.com/Ao1Pointblank/rofi-search_query
+
+#set default command for prompting user
+defcmd="fzf"
+promptcmd="$defcmd"
+
+#function to prompt user for input
+prompt_input() {
+    echo -n "Search Freetube: "
+    read -r query
+}
+
+#check if Rofi is requested
+if [ "$1" = "--rofi" ] || [ "$1" = "-r" ]; then
+    if command -v rofi &>/dev/null; then
+        promptcmd="rofi -dmenu -i -p 'Search Freetube'"
+    else
+        echo "Rofi is not installed. Defaulting to fzf."
+    fi
+    #if -r or --rofi is specified without a query, prompt the user for input
+    if [ -z "$2" ]; then
+        prompt_input
+    else
+        query="$2"
+    fi
+elif [ -n "$1" ]; then
+    query="$1"
+else
+    prompt_input
+fi
+
+#if query is empty, exit
+if [ -z "$query" ]; then
+    exit
+fi
+
+#sanitize the query (replace spaces with +)
+query=$(sed 's/ /+/g' <<< "$query")
+
+#fetch the results with the $query and delete all escaped characters
+response=$(curl -s "https://www.youtube.com/results?search_query=$query" | sed 's|\\.||g')
+
+#if unable to fetch the YouTube results page, inform and exit
+if ! grep -q "script" <<< "$response"; then
+    echo "Unable to fetch YouTube."
+    exit 1
+fi
+
+#regex expressions to match video and playlist entries from YouTube result page
+vgrep='"videoRenderer":{"videoId":"\K.{11}".+?"text":".+?[^\\](?=")'
+pgrep='"playlistRenderer":{"playlistId":"\K.{34}?","title":{"simpleText":".+?[^\"](?=")'
+
+#function to grep the ID and title and return them in the format "title (ID)"
+get_results() {
+    grep -oP "$1" <<< "$response" | awk -F\" -v p="$2" '{ print $1 ";" $NF }'
+}
+
+#get the list of videos/playlists and their IDs in videoids and playlistids
+videoids=$(get_results "$vgrep" "video")
+playlistids=$(get_results "$pgrep" "playlist")
+
+#if there are playlists or videos, append them to the list
+ids="$playlistids"$'\n'"$videoids"
+
+#remove leading blank lines from the ids variable
+ids=$(sed '/./,$!d' <<< "$ids")
+
+#URL prefix for videos and playlists
+videolink="https://youtu.be/"
+playlink="https://youtube.com/playlist?list="
+
+#prompt the results to the user infinitely until they exit (escape)
+while true; do
+    echo "Choose Video/Playlist to play: "
+    choice=$(echo -e "$ids" | cut -d';' -f2 | eval "$promptcmd") #don't show ID
+    if [ -z "$choice" ]; then exit; fi
+    id=$(echo -e "$ids" | grep -Fwm1 "$choice" | cut -d';' -f1) #get ID of choice
+    echo "$choice"
+    case $id in
+        ???????????) freetube "$videolink$id";;
+        ???????????????????????????????????) freetube "$playlink$id";;
+        *) exit ;;
+    esac
+done
