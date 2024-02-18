@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+#https://github.com/Ao1Pointblank/rofi-search_query
 
 ENGINES_DIR=~/.local/opt/rofi-search-engines/
 ENGINE_DEFAULT=Brave
@@ -14,11 +15,13 @@ then
 
     if [[ $ENGINE_SELECT == "Firefox Bookmarks" ]]
     then
+		#make sure the delimiter (𝆓 by default) matches the one in firefox_bookmarks.py
     	QUERY=$(python3 ~/.local/bin/firefox_bookmarks.py | rofi -dmenu -p "Firefox Bookmarks" -i | awk -F"𝆓" '{print $2}') &&
         $DEFAULT_BROWSER $QUERY
     elif [[ $ENGINE_SELECT == "Freetube" ]]
     then
-        freetube-search -r
+    	QUERY=$(rofi -dmenu -p "Search Freetube" -i)
+        "$ENGINES_DIR"/Freetube --rofi "$QUERY"
     elif [[ $ENGINE_SELECT == "Dictionary (Local)" ]]
     then
     	rofi-dict () {
