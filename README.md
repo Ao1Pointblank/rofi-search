@@ -16,5 +16,17 @@ install script?
 # Requires:
 ``rofi``  
 ``dict`` (optional)  
-``firefox`` (optional)  
-``freetube`` (optional)  
+``firefox``
+``freetube`` (optional)
+``beautifulsoup4`` (required to search firefox bookmarks)
+
+# Installation:
+- download: ``git clone https://github.com/Ao1Pointblank/rofi-search``
+
+- install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` 
+
+- install dict if you want to use local offline dictionaries: ``apt install dict wordnet`` (wordnet is a basic english dictionary library; you can add multiple other libraries too)
+
+- move ``rofi-search.sh`` and ``firefox_bookmarks.py`` to ``~/.local/bin/`` 
+
+- move ``rofi-search-engines`` to ``~/.local/opt/`` or to a directory of your choice (modify the ENGINES_DIR variable in the .sh file)
