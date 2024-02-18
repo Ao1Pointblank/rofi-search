@@ -21,7 +21,7 @@ install script?
 # Installation:
 - download: ``git clone https://github.com/Ao1Pointblank/rofi-search``
 
-- install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` (also remember to change ``browser.bookmarks.autoExportHTML`` to true in Firefox's ``about:config``)
+- install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` (also remember to change ``browser.bookmarks.autoExportHTML`` to ``true`` in Firefox's ``about:config``)
 
 - install dict if you want to use local offline dictionaries: ``apt install dict wordnet`` (wordnet is a basic english dictionary library; you can add multiple other libraries too)
 
@@ -33,6 +33,32 @@ install script?
 - path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``firefox_bookmarks.py`` file to reflect the correct path on your system.
 - permissions: make sure special search engines that run local commands have chmod +x permission (Freetube and the main script, perhaps Firefox Bookmarks too)
 
+# Included Engines (it's really easy to add your own!)
+Brave is selected as the default if one is not specified. You can change this with the ENGINE_DEFAULT variable in the .sh file.
+- Amazon
+- BetterDiscord Plugins
+- Brave
+- Dictionary (Local)
+- Dictionary.com
+- DuckDuckGo
+- Fdroid
+- Firefox Bookmarks
+- Freetube
+- Github
+- Google
+- Google-Images
+- Invidious
+- Metasearx
+- Moddb
+- Odysee
+- ProtonDB
+- Thesaurus.com
+- URL
+- UrbanDictionary
+- Wayback-Machine Archive
+- Wikipedia
+- YouTube
+- YoutubeMusic
 
 # Credits
 the Freetube script with fzf support was inspired by https://github.com/pystardust/ytfzf
