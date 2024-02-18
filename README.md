@@ -9,7 +9,7 @@
   go to ``about:config`` in firefox, and search for ``browser.bookmarks.autoExportHTML`` and set it to ``true``*  
 
 # TODO:
-install script? 
+uninstall script   
 fancy gif demo
 
 # Requires:
@@ -20,7 +20,7 @@ fancy gif demo
 ``beautifulsoup4`` (required to search firefox bookmarks)  
 
 # Installation:
-manual method:
+**1of2: Manual Method**
 - download script and search engines: ``git clone https://github.com/Ao1Pointblank/rofi-search``
 
 - install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` (also remember to change ``browser.bookmarks.autoExportHTML`` to ``true`` in Firefox's ``about:config``)
@@ -35,9 +35,14 @@ manual method:
 
 - move ``rofi-search-engines`` to ``~/.local/opt/`` or to a directory of your choice (modify the ENGINES_DIR variable in the .sh file)
 
+**2of2: install script method:**  
+``git clone https://github.com/Ao1Pointblank/rofi-search``  
+``cd rofi-search; chmod +x install.sh; ./install.sh`` 
+(not responsible for damager to folders in ~/.local. please review the install script before using.)
+
 # Potential issues:
-- path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``firefox_bookmarks.py`` file to reflect the correct path on your system.
-- permissions: make sure special search engines that run local commands have chmod +x permission (Freetube and the main script, perhaps Firefox Bookmarks too)
+- path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``Firefox Bookmarks`` file to reflect the correct path on your system.
+- permissions: make sure special search engines that run local commands have chmod +x permission (Freetube and the main script)
 
 # Included Engines (it's really easy to add your own!)
 Brave is selected as the default if one is not specified. You can change this with the ENGINE_DEFAULT variable in the .sh file.
