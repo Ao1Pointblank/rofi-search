@@ -10,8 +10,8 @@
 
 # TODO:
 searching local Firefox bookmarks (add python script to parse bookmarks)  
-Freetube fuzzyfind search (refine bash script before uploading)
-install script?
+Freetube fuzzyfind search (refine bash script before uploading) 
+install script? 
 
 # Requires:
 ``rofi``  
