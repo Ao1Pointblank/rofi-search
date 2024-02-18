@@ -30,3 +30,6 @@ install script?
 - move ``rofi-search.sh`` and ``firefox_bookmarks.py`` to ``~/.local/bin/`` 
 
 - move ``rofi-search-engines`` to ``~/.local/opt/`` or to a directory of your choice (modify the ENGINES_DIR variable in the .sh file)
+
+# Potential issues:
+- path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``firefox_bookmarks.py`` file to reflect the correct path on your system.
