@@ -20,11 +20,16 @@ fancy gif demo
 ``beautifulsoup4`` (required to search firefox bookmarks)  
 
 # Installation:
-- download: ``git clone https://github.com/Ao1Pointblank/rofi-search``
+manual method:
+- download script and search engines: ``git clone https://github.com/Ao1Pointblank/rofi-search``
 
 - install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` (also remember to change ``browser.bookmarks.autoExportHTML`` to ``true`` in Firefox's ``about:config``)
 
 - install dict if you want to use local offline dictionaries: ``apt install dict wordnet`` (wordnet is a basic english dictionary library; you can add multiple other libraries too)
+
+- install other dependencies: ``apt install rofi firefox``  
+  [Freetube](https://github.com/FreeTubeApp/FreeTube/releases) *or [Freetube-nightly](https://github.com/FreeTubeApp/FreeTube/actions/) (navigate to the most recent workflow and scroll down for assets)*  
+  this project assumes that you are installing Freetube to $PATH  
 
 - move ``rofi-search.sh`` to ``~/.local/bin/`` 
 
