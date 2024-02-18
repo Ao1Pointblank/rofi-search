@@ -6,8 +6,7 @@ ENGINE_DEFAULT=Brave
 PRIVATE_MODE_TEXT="Press ENTER to use private Mullvad window, or type query for normal search"
 
 DEFAULT_BROWSER="firefox"
-#DEFAULT_PRIVATE_BROWSER="firefox --private-window"
-DEFAULT_PRIVATE_BROWSER="/home/pointblank/.local/opt/mullvad-browser/Browser/start-mullvad-browser"
+DEFAULT_PRIVATE_BROWSER="firefox --private-window"
 
 ENGINE_SELECT=$(ls $ENGINES_DIR | rofi -dmenu -p "Search" -i -selected-row 1 -l $(ls -1 $ENGINES_DIR | wc -l)) &&
 if [[ -e $ENGINES_DIR"$ENGINE_SELECT" ]]
@@ -16,7 +15,7 @@ then
     if [[ $ENGINE_SELECT == "Firefox Bookmarks" ]]
     then
 		#make sure the delimiter (𝆓 by default) matches the one in firefox_bookmarks.py
-    	QUERY=$(python3 ~/.local/bin/firefox_bookmarks.py | rofi -dmenu -p "Firefox Bookmarks" -i | awk -F"𝆓" '{print $2}') &&
+    	QUERY=$(python3 "$ENGINES_DIR"/"Firefox Bookmarks" | rofi -dmenu -p "Firefox Bookmarks" -i | awk -F"𝆓" '{print $2}') &&
         $DEFAULT_BROWSER $QUERY
     elif [[ $ENGINE_SELECT == "Freetube" ]]
     then
