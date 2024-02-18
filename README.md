@@ -10,6 +10,7 @@
 
 # TODO:
 install script? 
+fancy gif demo
 
 # Requires:
 ``rofi``   
