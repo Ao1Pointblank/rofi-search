@@ -37,8 +37,8 @@ fancy gif demo
 
 **2of2: install script method:**  
 ``git clone https://github.com/Ao1Pointblank/rofi-search``  
-``cd rofi-search; chmod +x install.sh; ./install.sh`` 
-(not responsible for damager to folders in ~/.local. please review the install script before using.)
+``cd rofi-search; chmod +x install.sh; ./install.sh``   
+(not responsible for damage to folders in ~/.local. please review the install script before using.)
 
 # Potential issues:
 - path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``Firefox Bookmarks`` file to reflect the correct path on your system.
