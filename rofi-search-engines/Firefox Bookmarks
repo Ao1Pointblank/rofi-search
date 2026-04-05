@@ -1,4 +1,6 @@
 #https://github.com/Ao1Pointblank/rofi-search
+
+#requires "browser.bookmarks.autoExportHTML" be enabled in about:config in your browser
 #requires beautifulsoup4: ``pip install beautifulsoup4``
 #usage: ``python3 firefox_bookmarks.py``
 
@@ -9,7 +11,10 @@ import os
 user_folder = os.path.expanduser("~")
 
 #use glob to find the bookmarks file
-bookmark_files = glob.glob(os.path.join(user_folder, '.mozilla/firefox/*.default*/bookmarks.html'))
+#bookmark_files = glob.glob(os.path.join(user_folder, '.mozilla/firefox/*.default*/bookmarks.html'))
+#bookmark_files = glob.glob(os.path.join(user_folder, '.floorp/*.default-release/bookmarks.html'))
+#bookmark_files = glob.glob(os.path.join(user_folder, '.floorp/*Pointblank*/bookmarks.html'))
+bookmark_files = glob.glob(os.path.join(user_folder, '.var/app/app.zen_browser.zen/.zen/*.Default*/bookmarks.html'))
 
 #check if bookmark file found
 if bookmark_files:
