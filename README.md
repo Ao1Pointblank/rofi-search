@@ -31,7 +31,7 @@
 
 - move ``rofi-search-engines`` to ``~/.local/opt/`` or to a directory of your choice (modify the ENGINES_DIR variable in the .sh file)
 
-**2of2: install script method:**  (NO LONGER MAINTAINED)
+**2of2: install script method:**  (NO LONGER MAINTAINED) 
 ``git clone https://github.com/Ao1Pointblank/rofi-search``  
 ``cd rofi-search; chmod +x install.sh; ./install.sh``   
 (not responsible for damage to folders in ~/.local. please review the install script before using.)
