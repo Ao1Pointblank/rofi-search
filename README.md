@@ -10,13 +10,13 @@
 
 # Requires
 ``rofi``   
-``dict`` (optional)    
-``firefox``  
+``dict`` & ``hunspell`` (optional)    
+~~``firefox``~~ ``flatpak zen`` 
 ``freetube`` (optional)  
 ``beautifulsoup4`` (required to search firefox bookmarks)  
 
 # Installation
-**1of2: Manual Method**
+**1of2: Manual Method** (RECOMMENDED)
 - download script and search engines: ``git clone https://github.com/Ao1Pointblank/rofi-search``
 
 - install beautifulsoup4 if you plan to search firefox bookmarks: ``pip install beautifulsoup4`` (also remember to change ``browser.bookmarks.autoExportHTML`` to ``true`` in Firefox's ``about:config``)
@@ -31,7 +31,7 @@
 
 - move ``rofi-search-engines`` to ``~/.local/opt/`` or to a directory of your choice (modify the ENGINES_DIR variable in the .sh file)
 
-**2of2: install script method:**  
+**2of2: install script method:**  (NO LONGER MAINTAINED)
 ``git clone https://github.com/Ao1Pointblank/rofi-search``  
 ``cd rofi-search; chmod +x install.sh; ./install.sh``   
 (not responsible for damage to folders in ~/.local. please review the install script before using.)
