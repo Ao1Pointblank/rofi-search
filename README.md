@@ -39,6 +39,7 @@
 # Potential issues
 - path to firefox bookmarks file not valid. this can be fixed by editing line #12 of the ``Firefox Bookmarks`` file to reflect the correct path on your system.
 - permissions: make sure special search engines that run local commands have chmod +x permission (Freetube and the main script)
+- missing icons folder
 
 # Included Engines (it's really easy to add your own!)
 Brave is selected as the default if one is not specified. You can change this with the ENGINE_DEFAULT variable in the .sh file.
@@ -51,6 +52,7 @@ Brave is selected as the default if one is not specified. You can change this wi
 - Fdroid
 - Firefox Bookmarks
 - Freetube
+- Fsearch
 - Github
 - Google
 - Google-Images
