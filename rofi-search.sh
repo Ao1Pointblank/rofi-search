@@ -12,26 +12,10 @@ PRIVATE_MODE_TEXT="Press ENTER to use private browser window, or type query for 
 DEFAULT_BROWSER="flatpak run app.zen_browser.zen"
 DEFAULT_PRIVATE_BROWSER="flatpak run app.zen_browser.zen --private-window"
 
-
-###engine select
-
-#generate list with svg icons
-ENGINE_SELECT=$(ls "$ENGINES_DIR" | while read -r A; do
-    if [[ -f "$ENGINES_DIR/.ICONS/$A.svg" ]]; then
-        echo -en "$A\x00icon\x1f$ENGINES_DIR/.ICONS/$A.svg\n"
-    else
-        echo "$A"
-    fi
-done | rofi -dmenu -p "Search" -i -selected-row 2 -l "$(ls -1 "$ENGINES_DIR" | wc -l)")
-
-#exit if nothing selected
-[[ -z "$ENGINE_SELECT" ]] && exit 0
-
-
-###logic handler
-
+###main logic (exceptions to browser based searches first)
 handle_engine() {
     local engine="$1"
+    local direct_query="$2"
     local query
 
     case "$engine" in
@@ -55,7 +39,6 @@ handle_engine() {
             query=$(rofi -dmenu -lines 0 -p 'Search Dictionary')
             [[ -z "$query" ]] && return
 
-            #get suggestions
             word=$(echo "$query" | hunspell -a | awk '/^&/{for(i=5;i<=NF;i++) {gsub(/,$/, "", $i); print $i}}')
 
             if [[ -z "$word" ]]; then
@@ -69,39 +52,67 @@ handle_engine() {
             rofi -show calc -modi calc -no-show-match -no-sort -terse
             ;;
 
+
         *)
+            ###default browser search logic
 
-            ###default browser search logic (covers Brave, Google, etc.)
-
-            #check if the selected engine file exists, otherwise use default
+            #resolve engine file
             local engine_file="$ENGINES_DIR/$engine"
-            if [[ ! -f "$engine_file" ]]; then
-                engine_file="$ENGINES_DIR/$ENGINE_DEFAULT"
-            fi
+            [[ ! -f "$engine_file" ]] && engine_file="$ENGINES_DIR/$ENGINE_DEFAULT"
 
             local url_base
-            url_base=$(cat "$engine_file")
+            url_base=$(<"$engine_file")
 
-            #private mode Logic
-            local mode_choice
-            mode_choice=$(echo -e "$PRIVATE_MODE_TEXT" | rofi -l 1 -dmenu -p "$engine Search")
-
-            if [[ "$mode_choice" == "$PRIVATE_MODE_TEXT" ]]; then
-                #user wants private mode
-                local private_query
-                private_query=$(rofi -lines 0 -dmenu -p "Private $engine Search")
-                if [[ -n "$private_query" ]]; then
-                    eval "${DEFAULT_PRIVATE_BROWSER[@]}" "${url_base}${private_query}"
-                fi
+            #if a direct query was passed (from free text input), skip the rofi mode selection
+            if [[ -n "$direct_query" ]]; then
+                search_query="$direct_query"
+                browser_cmd="$DEFAULT_BROWSER"
             else
-                #user wants normal mode
-                if [[ -n "$mode_choice" ]]; then
-                    eval "${DEFAULT_BROWSER[@]}" "${url_base}${mode_choice}"
+                #when search engine directly selected, ask for private mode vs normal query
+                local mode_choice
+                mode_choice=$(echo -e "$PRIVATE_MODE_TEXT" | rofi -l 1 -dmenu -p "$engine Search")
+
+                #this check may not be needed at all
+                #[[ -z "$mode_choice" ]] && return
+
+                if [[ "$mode_choice" == "$PRIVATE_MODE_TEXT" ]]; then
+                    search_query=$(rofi -lines 0 -dmenu -p "Private $engine Search")
+                    browser_cmd="$DEFAULT_PRIVATE_BROWSER"
+                else
+                    search_query="$mode_choice"
+                    browser_cmd="$DEFAULT_BROWSER"
                 fi
+            fi
+
+            #execute search
+            if [[ -n "$search_query" ]]; then
+                local full_url="${url_base}${search_query}"
+                read -ra cmd_array <<< "$browser_cmd"
+                "${cmd_array[@]}" "$full_url" &
             fi
             ;;
     esac
 }
 
-###execute handler
-handle_engine "$ENGINE_SELECT"
+###engine selection/free text to default engine handling
+
+#generate list with svg icons
+ENGINE_SELECT=$(ls "$ENGINES_DIR" | while read -r A; do
+    if [[ -f "$ENGINES_DIR/.ICONS/$A.svg" ]]; then
+        echo -en "$A\x00icon\x1f$ENGINES_DIR/.ICONS/$A.svg\n"
+    else
+        echo "$A"
+    fi
+done | rofi -dmenu -p "Search" -i -selected-row 2 -l "$(ls -1 "$ENGINES_DIR" | wc -l)")
+
+#exit if nothing selected (Escape pressed)
+[[ -z "$ENGINE_SELECT" ]] && exit 0
+
+#check if input matches a valid engine file
+if [[ -f "$ENGINES_DIR/$ENGINE_SELECT" ]]; then
+    #valid engine selected from list
+    handle_engine "$ENGINE_SELECT"
+else
+    #free text typed (no matching file) -> treat as query for default engine
+    handle_engine "$ENGINE_DEFAULT" "$ENGINE_SELECT"
+fi
